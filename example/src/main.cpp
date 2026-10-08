@@ -4,7 +4,6 @@
 
 #include <util/CStringStream.hpp>
 #include <util/StringStreamLite.hpp>
-
 #include <util/BufferView.hpp>
 #include <util/UniqueArray.hpp>
 #include <util/ArraySupplier.hpp>
@@ -13,6 +12,7 @@
 #include <util/FilesystemTree.hpp>
 #include <util/Types.hpp>
 #include <util/Chars.h>
+#include <util/SPIDevice.hpp>
 
 int main()
 {
@@ -58,7 +58,10 @@ int main()
     size_t str16_len = strlen16(str16);
 
     size_t bytes_used;
-    char32_t codepoint = utf8_decode("my text", &bytes_used);
+    char32_t codepoint = utf8_decode("my text", &bytes_used); // returns 'm'
+
+    SPIDevice spidev = SPIDevice(spi1, 10, 11, 12, 13);
+    spidev.Prioritize();
 
     while (1)
     {
