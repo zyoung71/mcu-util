@@ -6,19 +6,18 @@ std::unordered_map<SPISharedConfig, std::vector<uint8_t>> SPIDevice::spi_device_
 
 bool SPISharedConfig::operator==(const SPISharedConfig &config) const
 {
-    return (spi_inst == config.spi_inst) &&
-        (sck_pin == config.sck_pin) &&
-        (tx_mosi_pin == config.tx_mosi_pin) &&
+    // notice we are comparing if at least one is true.
+    // if at least one pin is shared, we have to treat all pins shared.
+    return (sck_pin == config.sck_pin) ||
+        (tx_mosi_pin == config.tx_mosi_pin) ||
         (rx_miso_pin == config.rx_miso_pin);
 }
 
 size_t std::hash<SPISharedConfig>::operator()(const SPISharedConfig& config) const noexcept
 {
-    const uint32_t* pack_ptr = reinterpret_cast<const uint32_t*>(config.sck_pin);
-    uint32_t bytes = *pack_ptr & 0x00FFFFFF;
-
-    size_t hash = reinterpret_cast<size_t>(config.spi_inst);
-    hash ^= bytes;
+    uint32_t hash = (static_cast<uint32_t>(config.sck_pin) << 16) | 
+        (static_cast<uint32_t>(config.tx_mosi_pin) << 8)  | 
+        static_cast<uint32_t>(config.rx_miso_pin);
 
     hash = (hash ^ 61) ^ (hash >> 16);
     hash += (hash << 3);
@@ -26,7 +25,7 @@ size_t std::hash<SPISharedConfig>::operator()(const SPISharedConfig& config) con
     hash *= 0x27D4EB2D;
     hash ^= (hash >> 15);
 
-    return hash;
+    return (size_t)hash;
 }
 
 SPIDevice::SPIDevice(const SPISharedConfig& config, uint8_t cs_pin)
@@ -39,8 +38,8 @@ SPIDevice::SPIDevice(const SPISharedConfig& config, uint8_t cs_pin)
     }   
 }
 
-SPIDevice::SPIDevice(spi_inst_t* spi_inst, uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs_pin)
-    : SPIDevice(SPISharedConfig(spi_inst, sck_pin, tx_pin, rx_pin), cs_pin)
+SPIDevice::SPIDevice(uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs_pin)
+    : SPIDevice(SPISharedConfig(sck_pin, tx_pin, rx_pin), cs_pin)
 {
 }
 
