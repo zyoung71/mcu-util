@@ -43,7 +43,7 @@ SPIDevice::SPIDevice(uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs
 {
 }
 
-void SPIDevice::Prioritize()
+void SPIDevice::ChooseDevice()
 {
     for (uint8_t pin : spi_device_map.at(config))
     {
@@ -51,4 +51,9 @@ void SPIDevice::Prioritize()
     }
 
     gpio_put(cs_pin, 0); // Activate this one.
+}
+
+void SPIDevice::Deselect()
+{
+    gpio_put(cs_pin, 1);
 }

@@ -38,5 +38,6 @@ public:
     SPIDevice(const SPISharedConfig& config, uint8_t cs_pin);
     SPIDevice(uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs_pin);
 
-    void Prioritize();
+    void ChooseDevice();
+    void Deselect();
 };
