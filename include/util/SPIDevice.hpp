@@ -1,5 +1,6 @@
 #pragma once
 
+#include <hardware/gpio.h>
 #include <unordered_map>
 #include <vector>
 #include <cstdint>
@@ -38,6 +39,15 @@ public:
     SPIDevice(const SPISharedConfig& config, uint8_t cs_pin);
     SPIDevice(uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs_pin);
 
-    void ChooseDevice() const;
-    void Deselect() const;
+    // toggles off other devices and selects this one
+    void PrioritizeDevice() const;
+
+    inline void Select() const
+    {
+        gpio_put(cs_pin, 0);
+    }
+    inline void Deselect() const
+    {
+        gpio_put(cs_pin, 1);
+    }
 };

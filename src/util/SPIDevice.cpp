@@ -1,6 +1,5 @@
 #include <unordered_map>
 #include <util/SPIDevice.hpp>
-#include <hardware/gpio.h>
 
 std::unordered_map<SPISharedConfig, std::vector<uint8_t>> SPIDevice::spi_device_map;
 
@@ -43,7 +42,7 @@ SPIDevice::SPIDevice(uint8_t sck_pin, uint8_t tx_pin, uint8_t rx_pin, uint8_t cs
 {
 }
 
-void SPIDevice::ChooseDevice() const
+void SPIDevice::PrioritizeDevice() const
 {
     for (uint8_t pin : spi_device_map.at(config))
     {
@@ -51,9 +50,4 @@ void SPIDevice::ChooseDevice() const
     }
 
     gpio_put(cs_pin, 0); // Activate this one.
-}
-
-void SPIDevice::Deselect() const
-{
-    gpio_put(cs_pin, 1);
 }
