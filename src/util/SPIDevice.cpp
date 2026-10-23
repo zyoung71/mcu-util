@@ -46,8 +46,8 @@ void SPIDevice::PrioritizeDevice() const
 {
     for (uint8_t pin : spi_device_map.at(config))
     {
-        gpio_put(pin, 1); // Pull all high to disable them.
+        mcu_gpio_put(pin, 1); // Pull all high to disable them.
     }
 
-    gpio_put(cs_pin, 0); // Activate this one.
+    mcu_gpio_put(cs_pin, 0); // Activate this one.
 }

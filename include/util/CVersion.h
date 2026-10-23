@@ -19,11 +19,7 @@
 extern "C" {
 #endif
 
-#ifdef DEBUG
-#define LOG(...) printf(...)
-#else
-#define LOG(...)
-#endif
+// tbd
 
 #ifdef __cplusplus
 }

@@ -1,9 +1,9 @@
 #include <util/TimeHandler.hpp>
 
-absolute_time_t TimeHandler::Update()
+time_t TimeHandler::Update()
 {
-    static absolute_time_t then_us = 0;
-    now_us = to_us_since_boot(get_absolute_time());
+    static time_t then_us = 0;
+    now_us = mcu_get_time_since_boot_us();
     delta_us = now_us - then_us;
     then_us = now_us;
     return delta_us;

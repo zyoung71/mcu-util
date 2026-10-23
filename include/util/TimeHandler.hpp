@@ -1,18 +1,18 @@
 #pragma once
 
-#include <pico/time.h>
+#include <platform/time.h>
 
 struct TimeHandler
 {
 private:
-    absolute_time_t created_us;
+    time_t created_us;
 
 public:
-    absolute_time_t now_us;
-    absolute_time_t delta_us;
+    time_t now_us;
+    time_t delta_us;
 
     inline TimeHandler()
-        : created_us(to_us_since_boot(get_absolute_time())), now_us(0), delta_us(0) {}
+        : created_us(mcu_get_time_since_boot_us()), now_us(0), delta_us(0) {}
 
     inline TimeHandler& operator=(const TimeHandler& other)
     {
@@ -23,9 +23,9 @@ public:
     }
 
     // Returns the delta time in microseconds
-    absolute_time_t Update();
+    time_t Update();
 
-    inline absolute_time_t GetGlobalTimeWhenCreated() const
+    inline time_t GetGlobalTimeWhenCreated() const
     {
         return created_us;
     }

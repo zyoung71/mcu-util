@@ -1,4 +1,4 @@
-
+#include <pico/stdio.h>
 #include <pico/stdlib.h>
 #include <stdio.h>
 
@@ -13,6 +13,7 @@
 #include <util/Types.hpp>
 #include <util/Chars.h>
 #include <util/SPIDevice.hpp>
+#include <util/CVersion.h>
 
 int main()
 {

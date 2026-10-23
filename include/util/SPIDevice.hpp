@@ -1,10 +1,10 @@
 #pragma once
 
-#include <hardware/gpio.h>
 #include <unordered_map>
 #include <vector>
 #include <cstdint>
-#include <hardware/spi.h>
+
+#include <platform/gpio.h>
 
 struct SPISharedConfig
 {
@@ -44,10 +44,10 @@ public:
 
     inline void Select() const
     {
-        gpio_put(cs_pin, 0);
+        mcu_gpio_put(cs_pin, 0);
     }
     inline void Deselect() const
     {
-        gpio_put(cs_pin, 1);
+        mcu_gpio_put(cs_pin, 1);
     }
 };

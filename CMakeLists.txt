@@ -1,6 +1,6 @@
-if (NOT TARGET pico-util)
+if (NOT TARGET mcu-util)
 
-    add_library(pico-util STATIC
+    add_library(mcu-util STATIC
         src/util/StringLite.cpp
         src/util/FilesystemTree.cpp
         src/util/TimeHandler.cpp
@@ -8,18 +8,15 @@ if (NOT TARGET pico-util)
         src/util/SPIDevice.cpp
     )
 
-    target_include_directories(pico-util PUBLIC
+    target_include_directories(mcu-util PUBLIC
         include
         src # for tpp files
     )
 
-    target_link_libraries(pico-util
-        hardware_rtc
-        hardware_spi
-    )
-
-    target_compile_definitions(pico-util PUBLIC
-        $<$<CONFIG:Debug>:DEBUG>
+    add_subdirectory(lib/mcu-platform)
+    
+    target_link_libraries(mcu-util
+        mcu-platform-interface
     )
 
 endif()

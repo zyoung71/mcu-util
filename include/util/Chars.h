@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Platform.h"
+#include "CVersion.h"
 
 #ifdef __cplusplus
 extern "C" {
