@@ -5,7 +5,6 @@ if (NOT TARGET mcu-util)
         src/util/FilesystemTree.cpp
         src/util/TimeHandler.cpp
         src/util/Chars.c
-        src/util/SPIDevice.cpp
     )
 
     target_include_directories(mcu-util PUBLIC

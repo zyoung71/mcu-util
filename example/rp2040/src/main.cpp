@@ -61,8 +61,7 @@ int main()
     size_t bytes_used;
     char32_t codepoint = utf8_decode("my text", &bytes_used); // returns 'm'
 
-    SPIDevice spidev = SPIDevice(10, 11, 12, 13);
-    spidev.PrioritizeDevice();
+    SPIDevice spidev = SPIDevice(13, false);
 
     while (1)
     {
