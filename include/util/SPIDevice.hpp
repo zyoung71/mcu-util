@@ -7,9 +7,8 @@
 // Automatic control over chip select pins
 class SPIDevice
 {
-private:
+protected:
     const uint8_t cs_pin;
-
     bool active_if_gpio_high; // utility in cases where chip select pins are shared or pass thru hardware logic
 
 public:
