@@ -5,11 +5,11 @@
 struct TimeHandler
 {
 private:
-    time_t created_us;
+    mcu_time_t created_us;
 
 public:
-    time_t now_us;
-    time_t delta_us;
+    mcu_time_t now_us;
+    mcu_time_t delta_us;
 
     inline TimeHandler()
         : created_us(mcu_get_time_since_boot_us()), now_us(0), delta_us(0) {}
@@ -23,9 +23,9 @@ public:
     }
 
     // Returns the delta time in microseconds
-    time_t Update();
+    mcu_time_t Update();
 
-    inline time_t GetGlobalTimeWhenCreated() const
+    inline mcu_time_t GetGlobalTimeWhenCreated() const
     {
         return created_us;
     }
